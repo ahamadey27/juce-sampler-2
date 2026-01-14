@@ -22,6 +22,10 @@ NewProjectAudioProcessor::NewProjectAudioProcessor()
                        )
 #endif
 {
+    for (int i = 0; i < nNumVoices; i++)
+    {
+        mSampler.addVoice(new juce::SamplerVoice()); 
+    }
 }
 
 NewProjectAudioProcessor::~NewProjectAudioProcessor()
@@ -181,6 +185,22 @@ void NewProjectAudioProcessor::setStateInformation (const void* data, int sizeIn
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+}
+
+void NewProjectAudioProcessor::loadFile()
+{
+    // NOTE: Opening a FileChooser is a GUI operation and should be done on the message thread
+    // (typically from the editor). If you call this from the audio thread it can block audio.
+    juce::FileChooser chooser ("Please load a file");
+
+    if (chooser.browseForFileToOpen())
+    {
+        auto file = chooser.getResult();
+        // TODO: handle the selected file here (e.g., create a SamplerSound and add to mSampler).
+        // Example (very minimal, not a complete sampler sound setup):
+        // auto reader = formatManager.createReaderFor(file);
+        // if (reader != nullptr) { ... }
+    }
 }
 
 //==============================================================================
